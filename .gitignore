@@ -1,0 +1,45 @@
+# dependencies
+/frontend/node_modules
+
+# production
+/frontend/.next
+/frontend/out
+
+# testing
+/frontend/coverage
+
+# misc
+/frontend/.DS_Store
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/pnpm-debug.log*
+/frontend/.next.cache
+
+# vercel
+/frontend/.vercel
+
+# typescript
+/frontend/*.tsbuildinfo
+/frontend/.env
+
+
+# backend (Node.js project)
+backend/node_modules
+backend/.env
+backend/.env.local
+backend/.env.development.local
+backend/.env.test.local
+backend/.env.production.local
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+backend/pnpm-debug.log*
+backend/.DS_Store
+backend/dist
+backend/coverage
+backend/*.tsbuildinfo
