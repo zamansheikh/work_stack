@@ -73,12 +73,12 @@ const initializeDatabase = async () => {
         console.log('📦 Connected to MongoDB');
 
         // Clear existing data
-        await Feature.deleteMany({});
-        console.log('🗑️ Cleared existing features');
+        // await Feature.deleteMany({});
+        // console.log('🗑️ Cleared existing features');
 
         // Insert sample features
-        const features = await Feature.insertMany(sampleFeatures);
-        console.log(`✅ Created ${features.length} sample features`);
+        // const features = await Feature.insertMany(sampleFeatures);
+        // console.log(`✅ Created ${features.length} sample features`);
 
         // Create admin user if it doesn't exist
         const existingAdmin = await User.findOne({
@@ -100,7 +100,7 @@ const initializeDatabase = async () => {
 
         console.log('\n🎉 Database initialization completed successfully!');
         console.log('\n📊 Summary:');
-        console.log(`   • Features: ${features.length}`);
+        // console.log(`   • Features: ${features.length}`);
         console.log(`   • Admin Email: ${process.env.ADMIN_EMAIL}`);
         console.log(`   • Admin Password: ${process.env.ADMIN_PASSWORD}`);
         console.log('\n🚀 You can now start the server with: npm run dev');

@@ -63,10 +63,10 @@ const featureValidation = [
 // Validation rules for login
 const loginValidation = [
     body('email')
+        .isString()
         .trim()
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Please provide a valid email address'),
+        .isLength({ min: 3, max: 50 })
+        .withMessage('Please provide a valid email or username (3-50 characters)'),
 
     body('password')
         .isLength({ min: 6 })
