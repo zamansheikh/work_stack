@@ -8,7 +8,7 @@ interface AuthContextType {
     user: User | null;
     isLoading: boolean;
     isAuthenticated: boolean;
-    login: (email: string, password: string) => Promise<void>;
+    login: (emailOrUsername: string, password: string) => Promise<void>;
     logout: () => void;
     error: string | null;
     clearError: () => void;
@@ -27,13 +27,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setMounted(true);
     }, []);
 
-    const clearError = () => setError(null);
-
-    const login = async (email: string, password: string) => {
+    const clearError = () => setError(null); const login = async (emailOrUsername: string, password: string) => {
         try {
             setError(null);
             setIsLoading(true);
-            const { user: loggedInUser } = await authApi.login(email, password);
+            const { user: loggedInUser } = await authApi.login(emailOrUsername, password);
             setUser(loggedInUser);
         } catch (err) {
             const errorMessage = handleApiError(err);

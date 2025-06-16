@@ -13,7 +13,9 @@ import {
     TrendingUp,
     LogOut,
     Edit,
-    Trash2
+    Trash2,
+    Home
+
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -88,6 +90,13 @@ export default function AdminDashboard() {
                             </p>
                         </div>
                         <div className="flex items-center space-x-4">
+                            <Link
+                                href="/"
+                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                            >
+                                <Home className="h-4 w-4 mr-2" />
+                                Go to Features
+                            </Link>
                             <Link
                                 href="/admin/features/new"
                                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"

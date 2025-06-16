@@ -109,7 +109,9 @@ const mapBackendFeatureToFrontend = (backendFeature: any): Feature => {
 
 // Auth API
 export const authApi = {
-    async login(email: string, password: string): Promise<{ token: string; user: User }> {
+    async login(emailOrUsername: string, password: string): Promise<{ token: string; user: User }> {
+        //! Create a new variable call email
+        const email = emailOrUsername;
         const response = await apiFetch('/auth/login', {
             method: 'POST',
             body: JSON.stringify({ email, password }),
