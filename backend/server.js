@@ -8,6 +8,7 @@ const connectDB = require('./config/database');
 const authRoutes = require('./routes/auth');
 const featureRoutes = require('./routes/features');
 const uploadRoutes = require('./routes/upload');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/api/auth', authRoutes);
 app.use('/api/features', featureRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

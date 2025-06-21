@@ -1,97 +1,80 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Authenticate JWT token
-const authenticate = async (req, res, next) => {
-    try {
-        const authHeader = req.header('Authorization');
+// Protect routes - verify JWT token
+const protect = async (req, res, next) => {
+    let token;
 
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return res.status(401).json({
-                success: false,
-                message: 'Access denied. No token provided or invalid format.'
-            });
-        }
-
-        const token = authHeader.substring(7); // Remove 'Bearer ' prefix
-
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            const user = await User.findById(decoded.userId).select('-password');
+            // Get token from header
+            token = req.headers.authorization.split(' ')[1];
 
-            if (!user || !user.isActive) {
+            // Verify token
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+            // Get user from token and check if enabled
+            const user = await User.findById(decoded.id).select('-password');
+
+            if (!user) {
                 return res.status(401).json({
                     success: false,
-                    message: 'Invalid token or user not active.'
+                    message: 'User not found'
+                });
+            }
+
+            if (!user.enabled) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'User account is disabled'
                 });
             }
 
             req.user = user;
             next();
-        } catch (jwtError) {
+        } catch (error) {
+            console.error('Auth middleware error:', error);
             return res.status(401).json({
                 success: false,
-                message: 'Invalid token.'
+                message: 'Not authorized, token failed'
             });
         }
-    } catch (error) {
-        console.error('Auth middleware error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Server error during authentication.'
-        });
     }
-};
 
-// Check if user is admin
-const requireAdmin = (req, res, next) => {
-    if (!req.user) {
+    if (!token) {
         return res.status(401).json({
             success: false,
-            message: 'Authentication required.'
+            message: 'Not authorized, no token'
         });
     }
-
-    if (req.user.role !== 'admin') {
-        return res.status(403).json({
-            success: false,
-            message: 'Admin access required.'
-        });
-    }
-
-    next();
 };
 
-// Optional authentication (for routes that work with or without auth)
-const optionalAuth = async (req, res, next) => {
-    try {
-        const authHeader = req.header('Authorization');
-
-        if (authHeader && authHeader.startsWith('Bearer ')) {
-            const token = authHeader.substring(7);
-
-            try {
-                const decoded = jwt.verify(token, process.env.JWT_SECRET);
-                const user = await User.findById(decoded.userId).select('-password');
-
-                if (user && user.isActive) {
-                    req.user = user;
-                }
-            } catch (jwtError) {
-                // Token invalid, but continue without user
-                console.log('Invalid token in optional auth:', jwtError.message);
-            }
-        }
-
+// Admin only access
+const adminOnly = (req, res, next) => {
+    if (req.user && (req.user.role === 'admin' || req.user.role === 'superadmin')) {
         next();
-    } catch (error) {
-        console.error('Optional auth middleware error:', error);
-        next(); // Continue without authentication
+    } else {
+        res.status(403).json({
+            success: false,
+            message: 'Access denied. Admin privileges required.'
+        });
+    }
+};
+
+// Super Admin only access
+const superAdminOnly = (req, res, next) => {
+    if (req.user && req.user.role === 'superadmin') {
+        next();
+    } else {
+        res.status(403).json({
+            success: false,
+            message: 'Access denied. Super Admin privileges required.'
+        });
     }
 };
 
 module.exports = {
-    authenticate,
-    requireAdmin,
-    optionalAuth
+    protect,
+    adminOnly,
+    superAdminOnly
 };

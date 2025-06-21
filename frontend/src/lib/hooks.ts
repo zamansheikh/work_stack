@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Feature, PaginatedResponse, PaginationInfo } from '@/types';
-import { featuresApi, handleApiError } from '@/lib/api';
+import { Feature, PaginatedResponse, PaginationInfo, User, CreateUserRequest, UpdateUserRequest, UsersResponse } from '@/types';
+import { featuresApi, handleApiError, userApi } from '@/lib/api';
 
 interface UseFeaturesOptions {
     search?: string;
@@ -177,6 +177,138 @@ export function useFeatureMutations(): UseFeatureMutationsReturn {
         createFeature,
         updateFeature,
         deleteFeature,
+        isLoading,
+        error,
+        clearError,
+    };
+}
+
+// User Management Hooks
+interface UseUsersReturn {
+    users: User[];
+    totalUsers: number;
+    isLoading: boolean;
+    error: string | null;
+    refetch: () => Promise<void>;
+    clearError: () => void;
+}
+
+export function useUsers(): UseUsersReturn {
+    const [users, setUsers] = useState<User[]>([]);
+    const [totalUsers, setTotalUsers] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const clearError = () => setError(null);
+
+    const fetchUsers = useCallback(async () => {
+        try {
+            setError(null);
+            setIsLoading(true);
+            const data: UsersResponse = await userApi.getAll();
+            setUsers(data.users);
+            setTotalUsers(data.totalUsers);
+        } catch (err) {
+            setError(handleApiError(err));
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchUsers();
+    }, [fetchUsers]);
+
+    return {
+        users,
+        totalUsers,
+        isLoading,
+        error,
+        refetch: fetchUsers,
+        clearError,
+    };
+}
+
+interface UseUserMutationsReturn {
+    createUser: (userData: CreateUserRequest) => Promise<User>;
+    updateUser: (id: string, userData: UpdateUserRequest) => Promise<User>;
+    toggleUser: (id: string, enabled: boolean) => Promise<User>;
+    deleteUser: (id: string) => Promise<void>;
+    isLoading: boolean;
+    error: string | null;
+    clearError: () => void;
+}
+
+export function useUserMutations(): UseUserMutationsReturn {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const clearError = () => setError(null);
+
+    const createUser = useCallback(async (userData: CreateUserRequest): Promise<User> => {
+        try {
+            setError(null);
+            setIsLoading(true);
+            const user = await userApi.create(userData);
+            return user;
+        } catch (err) {
+            const errorMessage = handleApiError(err);
+            setError(errorMessage);
+            throw new Error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    const updateUser = useCallback(async (id: string, userData: UpdateUserRequest): Promise<User> => {
+        try {
+            setError(null);
+            setIsLoading(true);
+            const user = await userApi.update(id, userData);
+            return user;
+        } catch (err) {
+            const errorMessage = handleApiError(err);
+            setError(errorMessage);
+            throw new Error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    const toggleUser = useCallback(async (id: string, enabled: boolean): Promise<User> => {
+        try {
+            setError(null);
+            setIsLoading(true);
+            const user = await userApi.toggle(id, { enabled });
+            return user;
+        } catch (err) {
+            const errorMessage = handleApiError(err);
+            setError(errorMessage);
+            throw new Error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    const deleteUser = useCallback(async (id: string): Promise<void> => {
+        try {
+            setError(null);
+            setIsLoading(true);
+            await userApi.delete(id);
+        } catch (err) {
+            const errorMessage = handleApiError(err);
+            setError(errorMessage);
+            throw new Error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    return {
+        createUser,
+        updateUser,
+        toggleUser,
+        deleteUser,
         isLoading,
         error,
         clearError,

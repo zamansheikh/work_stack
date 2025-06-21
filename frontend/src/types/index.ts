@@ -28,9 +28,33 @@ export interface User {
     id: string; // Will be mapped from _id
     name?: string;
     email: string;
-    role: 'admin' | 'user'; // Assuming 'user' role can also exist
-    lastLogin?: Date | string; // Added from backend
+    role: 'admin' | 'user' | 'superadmin';
+    enabled: boolean;
+    lastLogin?: Date | string;
     createdAt: Date | string;
+    updatedAt: Date | string;
+}
+
+export interface CreateUserRequest {
+    name: string;
+    email: string;
+    password: string;
+    role: 'admin' | 'user';
+}
+
+export interface UpdateUserRequest {
+    name?: string;
+    email?: string;
+    role?: 'admin' | 'user' | 'superadmin';
+}
+
+export interface ToggleUserRequest {
+    enabled: boolean;
+}
+
+export interface UsersResponse {
+    users: User[];
+    totalUsers: number;
 }
 
 export interface PaginationInfo {

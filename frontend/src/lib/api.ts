@@ -1,4 +1,4 @@
-import { Feature, User, PaginatedResponse, FeatureStats, Attachment } from '@/types';
+import { Feature, User, PaginatedResponse, FeatureStats, Attachment, CreateUserRequest, UpdateUserRequest, ToggleUserRequest, UsersResponse } from '@/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -91,8 +91,10 @@ const mapBackendUserToFrontend = (backendUser: any): User => {
         email: backendUser.email,
         name: backendUser.name,
         role: backendUser.role,
+        enabled: backendUser.enabled ?? true,
         lastLogin: backendUser.lastLogin,
         createdAt: backendUser.createdAt || new Date().toISOString(),
+        updatedAt: backendUser.updatedAt || new Date().toISOString(),
     };
 };
 
@@ -265,6 +267,79 @@ export const featuresApi = {
         const response = await apiFetch(`/features/${id}`, { method: 'DELETE' });
         if (!response.success) {
             throw new ApiError(response.message || 'Failed to delete feature', response.status || 500);
+        }
+    }
+};
+
+// User Management API (Super Admin Only)
+export const userApi = {
+    async getAll(): Promise<UsersResponse> {
+        const response = await apiFetch('/admin/users');
+        
+        if (!response.success || !response.data) {
+            throw new ApiError(response.message || 'Failed to fetch users', response.status || 500);
+        }
+
+        const { users: backendUsers, totalUsers } = response.data;
+        const frontendUsers = backendUsers.map(mapBackendUserToFrontend);
+        
+        return { users: frontendUsers, totalUsers };
+    },
+
+    async getById(id: string): Promise<User> {
+        const response = await apiFetch(`/admin/users/${id}`);
+        
+        if (!response.success || !response.data || !response.data.user) {
+            throw new ApiError(response.message || 'Failed to fetch user', response.status || 500);
+        }
+
+        return mapBackendUserToFrontend(response.data.user);
+    },
+
+    async create(userData: CreateUserRequest): Promise<User> {
+        const response = await apiFetch('/admin/users', {
+            method: 'POST',
+            body: JSON.stringify(userData),
+        });
+
+        if (!response.success || !response.data || !response.data.user) {
+            throw new ApiError(response.message || 'Failed to create user', response.status || 500);
+        }
+
+        return mapBackendUserToFrontend(response.data.user);
+    },
+
+    async update(id: string, userData: UpdateUserRequest): Promise<User> {
+        const response = await apiFetch(`/admin/users/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(userData),
+        });
+
+        if (!response.success || !response.data || !response.data.user) {
+            throw new ApiError(response.message || 'Failed to update user', response.status || 500);
+        }
+
+        return mapBackendUserToFrontend(response.data.user);
+    },
+
+    async toggle(id: string, toggleData: ToggleUserRequest): Promise<User> {
+        const response = await apiFetch(`/admin/users/${id}/toggle`, {
+            method: 'PATCH',
+            body: JSON.stringify(toggleData),
+        });
+
+        if (!response.success || !response.data || !response.data.user) {
+            throw new ApiError(response.message || 'Failed to toggle user status', response.status || 500);
+        }
+
+        return mapBackendUserToFrontend(response.data.user);
+    },
+
+    async delete(id: string): Promise<void> {
+        const response = await apiFetch(`/admin/users/${id}`, { method: 'DELETE' });
+        
+        if (!response.success) {
+            throw new ApiError(response.message || 'Failed to delete user', response.status || 500);
         }
     }
 };

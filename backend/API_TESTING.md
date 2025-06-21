@@ -6,6 +6,8 @@ This file contains example API calls for testing the backend functionality.
 - Backend URL: http://localhost:5000
 - Admin Email: admin@example.com
 - Admin Password: admin123
+- Super Admin Email: superadmin@example.com
+- Super Admin Password: superadmin123
 
 ## 1. Health Check
 ```bash
@@ -96,6 +98,68 @@ curl -X DELETE http://localhost:5000/api/features/FEATURE_ID \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
+## 11. Super Admin - Get All Users
+```bash
+curl http://localhost:5000/api/admin/users \
+  -H "Authorization: Bearer YOUR_SUPER_ADMIN_JWT_TOKEN"
+```
+
+## 12. Super Admin - Create New User
+```bash
+curl -X POST http://localhost:5000/api/admin/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_SUPER_ADMIN_JWT_TOKEN" \
+  -d '{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "role": "admin"
+  }'
+```
+
+## 13. Super Admin - Enable/Disable User
+```bash
+# Enable user
+curl -X PATCH http://localhost:5000/api/admin/users/USER_ID/toggle \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_SUPER_ADMIN_JWT_TOKEN" \
+  -d '{
+    "enabled": true
+  }'
+
+# Disable user
+curl -X PATCH http://localhost:5000/api/admin/users/USER_ID/toggle \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_SUPER_ADMIN_JWT_TOKEN" \
+  -d '{
+    "enabled": false
+  }'
+```
+
+## 14. Super Admin - Get User Details
+```bash
+curl http://localhost:5000/api/admin/users/USER_ID \
+  -H "Authorization: Bearer YOUR_SUPER_ADMIN_JWT_TOKEN"
+```
+
+## 15. Super Admin - Update User
+```bash
+curl -X PUT http://localhost:5000/api/admin/users/USER_ID \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_SUPER_ADMIN_JWT_TOKEN" \
+  -d '{
+    "name": "Updated Name",
+    "email": "updated@example.com",
+    "role": "admin"
+  }'
+```
+
+## 16. Super Admin - Delete User
+```bash
+curl -X DELETE http://localhost:5000/api/admin/users/USER_ID \
+  -H "Authorization: Bearer YOUR_SUPER_ADMIN_JWT_TOKEN"
+```
+
 ## Response Examples
 
 ### Successful Login Response
@@ -150,6 +214,72 @@ curl -X DELETE http://localhost:5000/api/features/FEATURE_ID \
 }
 ```
 
+### Users List Response (Super Admin)
+```json
+{
+  "success": true,
+  "data": {
+    "users": [
+      {
+        "_id": "user_id_1",
+        "name": "John Doe",
+        "email": "john@example.com",
+        "role": "admin",
+        "enabled": true,
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z",
+        "lastLogin": "2024-01-02T10:30:00.000Z"
+      },
+      {
+        "_id": "user_id_2",
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "role": "admin",
+        "enabled": false,
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-03T14:20:00.000Z",
+        "lastLogin": "2024-01-01T09:15:00.000Z"
+      }
+    ],
+    "totalUsers": 2
+  }
+}
+```
+
+### Create User Response (Super Admin)
+```json
+{
+  "success": true,
+  "message": "User created successfully",
+  "data": {
+    "user": {
+      "id": "new_user_id",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "admin",
+      "enabled": true,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    }
+  }
+}
+```
+
+### Toggle User Status Response (Super Admin)
+```json
+{
+  "success": true,
+  "message": "User disabled successfully",
+  "data": {
+    "user": {
+      "id": "user_id",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "enabled": false
+    }
+  }
+}
+```
+
 ### Error Response
 ```json
 {
@@ -158,9 +288,27 @@ curl -X DELETE http://localhost:5000/api/features/FEATURE_ID \
 }
 ```
 
+### Disabled User Login Error
+```json
+{
+  "success": false,
+  "message": "Account is disabled. Please contact administrator."
+}
+```
+
+### Access Denied Error
+```json
+{
+  "success": false,
+  "message": "Access denied. Super Admin privileges required."
+}
+```
+
 ## Notes
 - Replace `YOUR_JWT_TOKEN` with the actual token from login response
+- Replace `YOUR_SUPER_ADMIN_JWT_TOKEN` with the actual token for super admin
 - Replace `FEATURE_ID` with actual feature MongoDB ObjectId
+- Replace `USER_ID` with actual user MongoDB ObjectId
 - All protected routes require `Authorization: Bearer TOKEN` header
 - File uploads use `multipart/form-data` content type
 - API uses JSON for all other endpoints
