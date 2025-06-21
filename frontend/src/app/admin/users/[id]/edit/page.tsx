@@ -24,7 +24,7 @@ export default function EditUserPage() {
     });
     const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
     const [isLoadingUser, setIsLoadingUser] = useState(true);
-    const [loadError, setLoadError] = useState<string | null>(null);    useEffect(() => {
+    const [loadError, setLoadError] = useState<string | null>(null); useEffect(() => {
         const loadUser = async () => {
             try {
                 setIsLoadingUser(true);
@@ -46,7 +46,7 @@ export default function EditUserPage() {
         if (!authLoading && (!isAuthenticated || currentUser?.role !== 'superadmin')) {
             router.push('/admin');
             return;
-        }        if (userId && isAuthenticated) {
+        } if (userId && isAuthenticated) {
             loadUser();
         }
     }, [userId, authLoading, isAuthenticated, currentUser, router]);
@@ -202,9 +202,8 @@ export default function EditUserPage() {
                                         required
                                         value={formData.name || ''}
                                         onChange={(e) => handleInputChange('name', e.target.value)}
-                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${
-                                            validationErrors.name ? 'border-red-300' : ''
-                                        }`}
+                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${validationErrors.name ? 'border-red-300' : ''
+                                            }`}
                                         placeholder="Enter full name"
                                         disabled={isLoading}
                                     />
@@ -224,9 +223,8 @@ export default function EditUserPage() {
                                         required
                                         value={formData.email || ''}
                                         onChange={(e) => handleInputChange('email', e.target.value)}
-                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${
-                                            validationErrors.email ? 'border-red-300' : ''
-                                        }`}
+                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${validationErrors.email ? 'border-red-300' : ''
+                                            }`}
                                         placeholder="Enter email address"
                                         disabled={isLoading}
                                     />
@@ -255,7 +253,7 @@ export default function EditUserPage() {
                                     )}
                                 </select>
                                 <p className="mt-1 text-sm text-gray-500">
-                                    {isCurrentUser 
+                                    {isCurrentUser
                                         ? 'You cannot change your own role.'
                                         : 'Admin users can manage features and content. Regular users have read-only access.'
                                     }
@@ -265,11 +263,10 @@ export default function EditUserPage() {
                             <div className="bg-gray-50 p-4 rounded-md">
                                 <h4 className="text-sm font-medium text-gray-900 mb-2">Account Status</h4>
                                 <div className="flex items-center space-x-2">
-                                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                        userData.enabled
+                                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${userData.enabled
                                             ? 'bg-green-100 text-green-800'
                                             : 'bg-red-100 text-red-800'
-                                    }`}>
+                                        }`}>
                                         {userData.enabled ? 'Active' : 'Disabled'}
                                     </span>
                                     {userData.lastLogin && (

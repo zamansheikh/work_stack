@@ -275,20 +275,20 @@ export const featuresApi = {
 export const userApi = {
     async getAll(): Promise<UsersResponse> {
         const response = await apiFetch('/admin/users');
-        
+
         if (!response.success || !response.data) {
             throw new ApiError(response.message || 'Failed to fetch users', response.status || 500);
         }
 
         const { users: backendUsers, totalUsers } = response.data;
         const frontendUsers = backendUsers.map(mapBackendUserToFrontend);
-        
+
         return { users: frontendUsers, totalUsers };
     },
 
     async getById(id: string): Promise<User> {
         const response = await apiFetch(`/admin/users/${id}`);
-        
+
         if (!response.success || !response.data || !response.data.user) {
             throw new ApiError(response.message || 'Failed to fetch user', response.status || 500);
         }
@@ -337,7 +337,7 @@ export const userApi = {
 
     async delete(id: string): Promise<void> {
         const response = await apiFetch(`/admin/users/${id}`, { method: 'DELETE' });
-        
+
         if (!response.success) {
             throw new ApiError(response.message || 'Failed to delete user', response.status || 500);
         }

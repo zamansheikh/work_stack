@@ -309,11 +309,10 @@ export default function UsersManagement() {
                                                     </span>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
-                                                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                                        userItem.enabled
+                                                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${userItem.enabled
                                                             ? 'bg-green-100 text-green-800'
                                                             : 'bg-red-100 text-red-800'
-                                                    }`}>
+                                                        }`}>
                                                         {userItem.enabled ? 'Active' : 'Disabled'}
                                                     </span>
                                                 </td>
@@ -339,9 +338,8 @@ export default function UsersManagement() {
                                                             <Edit className="h-4 w-4" />
                                                         </Link>
                                                         <button
-                                                            className={`${
-                                                                userItem.enabled ? 'text-orange-600 hover:text-orange-900' : 'text-green-600 hover:text-green-900'
-                                                            }`}
+                                                            className={`${userItem.enabled ? 'text-orange-600 hover:text-orange-900' : 'text-green-600 hover:text-green-900'
+                                                                }`}
                                                             onClick={() => handleToggleClick(userItem.id, userItem.enabled)}
                                                             disabled={isMutating || userItem.id === user?.id}
                                                             title={userItem.id === user?.id ? 'Cannot disable your own account' : ''}
@@ -401,11 +399,10 @@ export default function UsersManagement() {
                                     </button>
                                     <button
                                         onClick={handleToggleConfirm}
-                                        className={`px-4 py-2 text-white text-base font-medium rounded-md w-24 focus:outline-none focus:ring-2 disabled:opacity-50 ${
-                                            userToToggle.enabled
+                                        className={`px-4 py-2 text-white text-base font-medium rounded-md w-24 focus:outline-none focus:ring-2 disabled:opacity-50 ${userToToggle.enabled
                                                 ? 'bg-green-600 hover:bg-green-700 focus:ring-green-300'
                                                 : 'bg-orange-600 hover:bg-orange-700 focus:ring-orange-300'
-                                        }`}
+                                            }`}
                                         disabled={isMutating}
                                     >
                                         {isMutating ? 'Processing...' : (userToToggle.enabled ? 'Enable' : 'Disable')}

@@ -155,9 +155,8 @@ export default function CreateUserPage() {
                                         required
                                         value={formData.name}
                                         onChange={(e) => handleInputChange('name', e.target.value)}
-                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${
-                                            validationErrors.name ? 'border-red-300' : ''
-                                        }`}
+                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${validationErrors.name ? 'border-red-300' : ''
+                                            }`}
                                         placeholder="Enter full name"
                                         disabled={isLoading}
                                     />
@@ -177,9 +176,8 @@ export default function CreateUserPage() {
                                         required
                                         value={formData.email}
                                         onChange={(e) => handleInputChange('email', e.target.value)}
-                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${
-                                            validationErrors.email ? 'border-red-300' : ''
-                                        }`}
+                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${validationErrors.email ? 'border-red-300' : ''
+                                            }`}
                                         placeholder="Enter email address"
                                         disabled={isLoading}
                                     />
@@ -222,9 +220,8 @@ export default function CreateUserPage() {
                                             required
                                             value={formData.password}
                                             onChange={(e) => handleInputChange('password', e.target.value)}
-                                            className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm pr-10 ${
-                                                validationErrors.password ? 'border-red-300' : ''
-                                            }`}
+                                            className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm pr-10 ${validationErrors.password ? 'border-red-300' : ''
+                                                }`}
                                             placeholder="Enter password"
                                             disabled={isLoading}
                                         />
@@ -263,9 +260,8 @@ export default function CreateUserPage() {
                                                     setValidationErrors(prev => ({ ...prev, confirmPassword: '' }));
                                                 }
                                             }}
-                                            className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm pr-10 ${
-                                                validationErrors.confirmPassword ? 'border-red-300' : ''
-                                            }`}
+                                            className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm pr-10 ${validationErrors.confirmPassword ? 'border-red-300' : ''
+                                                }`}
                                             placeholder="Confirm password"
                                             disabled={isLoading}
                                         />

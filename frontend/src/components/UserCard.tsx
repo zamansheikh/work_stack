@@ -1,13 +1,13 @@
 import { User } from '@/types';
-import { 
-    Shield, 
-    ShieldCheck, 
-    ShieldX, 
-    User as UserIcon, 
-    CheckCircle, 
-    XCircle, 
-    Clock, 
-    Mail 
+import {
+    Shield,
+    ShieldCheck,
+    ShieldX,
+    User as UserIcon,
+    CheckCircle,
+    XCircle,
+    Clock,
+    Mail
 } from 'lucide-react';
 
 interface UserCardProps {
@@ -19,13 +19,13 @@ interface UserCardProps {
     isMutating?: boolean;
 }
 
-export function UserCard({ 
-    user, 
-    currentUserId, 
-    onEdit, 
-    onToggle, 
-    onDelete, 
-    isMutating = false 
+export function UserCard({
+    user,
+    currentUserId,
+    onEdit,
+    onToggle,
+    onDelete,
+    isMutating = false
 }: UserCardProps) {
     const getRoleIcon = (role: string) => {
         switch (role) {
@@ -77,11 +77,10 @@ export function UserCard({
                                 {getRoleIcon(user.role)}
                                 <span className="ml-1 capitalize">{user.role}</span>
                             </span>
-                            <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                user.enabled
+                            <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${user.enabled
                                     ? 'bg-green-100 text-green-800'
                                     : 'bg-red-100 text-red-800'
-                            }`}>
+                                }`}>
                                 {user.enabled ? (
                                     <>
                                         <CheckCircle className="h-3 w-3 mr-1" />
@@ -107,9 +106,8 @@ export function UserCard({
                     </button>
                     <button
                         onClick={() => onToggle(user.id, user.enabled)}
-                        className={`p-1 ${
-                            user.enabled ? 'text-orange-600 hover:text-orange-900' : 'text-green-600 hover:text-green-900'
-                        }`}
+                        className={`p-1 ${user.enabled ? 'text-orange-600 hover:text-orange-900' : 'text-green-600 hover:text-green-900'
+                            }`}
                         disabled={isMutating || isCurrentUser}
                         title={isCurrentUser ? 'Cannot disable your own account' : ''}
                     >
