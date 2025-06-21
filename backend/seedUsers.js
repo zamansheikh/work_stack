@@ -10,8 +10,7 @@ const seedSuperAdmin = async () => {
         console.log('Connected to MongoDB');
 
         // Check if super admin already exists
-        const existingSuperAdmin = await User.findOne({ role: 'superadmin' });
-        if (existingSuperAdmin) {
+        const existingSuperAdmin = await User.findOne({ role: 'superadmin' }); if (existingSuperAdmin) {
             console.log('Super Admin already exists');
             process.exit(0);
         }
@@ -23,7 +22,7 @@ const seedSuperAdmin = async () => {
         // Create super admin user
         const superAdmin = new User({
             name: 'Super Administrator',
-            email: 'superadmin',
+            email: 'superadmin@example.com',
             password: hashedPassword,
             role: 'superadmin',
             enabled: true
@@ -36,13 +35,13 @@ const seedSuperAdmin = async () => {
         const adminHashedPassword = await bcrypt.hash('admin123', salt);
         const admin = new User({
             name: 'jayfettig',
-            email: 'jayfettig',
+            email: 'jayfettig@example.com',
             password: adminHashedPassword,
             role: 'admin',
             enabled: true
         });
 
-        // await admin.save();
+        await admin.save();
         console.log('Regular Admin created successfully');
 
         process.exit(0);
