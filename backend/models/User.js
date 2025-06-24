@@ -34,9 +34,9 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Index for faster queries
-userSchema.index({ email: 1 });
+// Add indexes before creating the model
 userSchema.index({ role: 1 });
 userSchema.index({ enabled: 1 });
+// Remove email index since unique: true already creates one
 
 module.exports = mongoose.model('User', userSchema);

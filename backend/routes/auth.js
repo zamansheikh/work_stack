@@ -83,4 +83,3 @@ router.put('/change-password', protect, async (req, res) => {
 });
 
 module.exports = router;
-module.exports = router;
