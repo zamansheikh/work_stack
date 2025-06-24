@@ -90,13 +90,10 @@ export default function EditUserPage() {
 
         if (!formData.name?.trim()) {
             errors.name = 'Name is required';
+        } if (!formData.email?.trim()) {
+            errors.email = 'Email or username is required';
         }
-
-        if (!formData.email?.trim()) {
-            errors.email = 'Email is required';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            errors.email = 'Please enter a valid email address';
-        }
+        // Removed strict email validation to allow usernames
 
         setValidationErrors(errors);
         return Object.keys(errors).length === 0;
@@ -210,27 +207,27 @@ export default function EditUserPage() {
                                     {validationErrors.name && (
                                         <p className="mt-1 text-sm text-red-600">{validationErrors.name}</p>
                                     )}
-                                </div>
-
-                                <div>
+                                </div>                                <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                        Email Address
+                                        Email or Username
                                     </label>
                                     <input
-                                        type="email"
+                                        type="text"
                                         name="email"
                                         id="email"
                                         required
-                                        value={formData.email || ''}
-                                        onChange={(e) => handleInputChange('email', e.target.value)}
+                                        value={formData.email || ''} onChange={(e) => handleInputChange('email', e.target.value)}
                                         className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${validationErrors.email ? 'border-red-300' : ''
                                             }`}
-                                        placeholder="Enter email address"
+                                        placeholder="Enter email or username"
                                         disabled={isLoading}
                                     />
                                     {validationErrors.email && (
                                         <p className="mt-1 text-sm text-red-600">{validationErrors.email}</p>
                                     )}
+                                    <p className="mt-1 text-sm text-gray-500">
+                                        You can enter either an email address or a username
+                                    </p>
                                 </div>
                             </div>
 
@@ -264,8 +261,8 @@ export default function EditUserPage() {
                                 <h4 className="text-sm font-medium text-gray-900 mb-2">Account Status</h4>
                                 <div className="flex items-center space-x-2">
                                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${userData.enabled
-                                            ? 'bg-green-100 text-green-800'
-                                            : 'bg-red-100 text-red-800'
+                                        ? 'bg-green-100 text-green-800'
+                                        : 'bg-red-100 text-red-800'
                                         }`}>
                                         {userData.enabled ? 'Active' : 'Disabled'}
                                     </span>

@@ -60,14 +60,17 @@ This implementation adds comprehensive user management features to the frontend,
 ### 5. **Enhanced Admin Dashboard**
 - **Super Admin Badge**: Visual indicator for super admin users
 - **User Management Button**: Quick access to user management (super admin only)
+- **Change Password Button**: All users can access password change functionality
 - **Role-based UI**: Show different options based on user role
 
 ### 6. **Authentication Enhancements**
 - **Username/Email Login**: Updated login to accept both username and email
+- **Change Password**: All authenticated users can change their own password
 - **Enhanced Login Form**: 
   - Changed input type from `email` to `text`
   - Updated labels and placeholders
   - Better user experience messaging
+- **Flexible User Creation**: Super admins can create users with either email or username
 
 ### 7. **Security Features**
 - **Role-based Access Control**: 
@@ -90,7 +93,9 @@ This implementation adds comprehensive user management features to the frontend,
 src/
 ├── app/
 │   ├── admin/
-│   │   ├── page.tsx (Enhanced with user management)
+│   │   ├── page.tsx (Enhanced with user management + change password)
+│   │   ├── change-password/
+│   │   │   └── page.tsx (Change password for all users)
 │   │   └── users/
 │   │       ├── page.tsx (Users list)
 │   │       ├── new/
@@ -104,11 +109,11 @@ src/
 │   ├── UserCard.tsx (User display component)
 │   └── UserStats.tsx (User statistics)
 ├── lib/
-│   ├── api.ts (Enhanced with userApi)
-│   ├── hooks.ts (Added user management hooks)
+│   ├── api.ts (Enhanced with userApi + changePassword)
+│   ├── hooks.ts (Added user management hooks + useChangePassword)
 │   └── auth-context.tsx (Updated for username/email login)
 └── types/
-    └── index.ts (Enhanced User interface)
+    └── index.ts (Enhanced User interface + ChangePasswordRequest)
 ```
 
 ## Backend API Compatibility
@@ -121,6 +126,7 @@ The frontend is fully compatible with your backend API endpoints:
 - `PATCH /api/admin/users/:userId/toggle` - Enable/disable user
 - `DELETE /api/admin/users/:userId` - Delete user
 - `POST /api/auth/login` - Login with emailOrUsername
+- `PUT /api/auth/change-password` - Change password (any authenticated user)
 
 ## Access Control
 - **Super Admin**: Full access to all user management features
@@ -132,11 +138,12 @@ To test the implementation:
 
 1. **Login as Super Admin**: Use the super admin credentials from your backend
 2. **Access User Management**: Click "Manage Users" from admin dashboard
-3. **Create Users**: Test user creation with validation
-4. **Edit Users**: Test user updates with role restrictions
+3. **Create Users**: Test user creation with validation (supports email and username)
+4. **Edit Users**: Test user updates with role restrictions (supports email and username)
 5. **Toggle Status**: Test enabling/disabling users
 6. **Delete Users**: Test user deletion with safety checks
 7. **Login with Username**: Test the enhanced login system
+8. **Change Password**: Test password change functionality for any authenticated user
 
 ## Security Considerations
 - All user management operations require super admin privileges

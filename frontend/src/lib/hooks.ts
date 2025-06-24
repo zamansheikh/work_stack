@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Feature, PaginatedResponse, PaginationInfo, User, CreateUserRequest, UpdateUserRequest, UsersResponse } from '@/types';
-import { featuresApi, handleApiError, userApi } from '@/lib/api';
+import { Feature, PaginatedResponse, PaginationInfo, User, CreateUserRequest, UpdateUserRequest, UsersResponse, ChangePasswordRequest } from '@/types';
+import { featuresApi, handleApiError, userApi, authApi } from '@/lib/api';
 
 interface UseFeaturesOptions {
     search?: string;
@@ -309,6 +309,42 @@ export function useUserMutations(): UseUserMutationsReturn {
         updateUser,
         toggleUser,
         deleteUser,
+        isLoading,
+        error,
+        clearError,
+    };
+}
+
+// Change Password Hook
+interface UseChangePasswordReturn {
+    changePassword: (passwordData: ChangePasswordRequest) => Promise<void>;
+    isLoading: boolean;
+    error: string | null;
+    clearError: () => void;
+}
+
+export function useChangePassword(): UseChangePasswordReturn {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const clearError = () => setError(null);
+
+    const changePassword = useCallback(async (passwordData: ChangePasswordRequest): Promise<void> => {
+        try {
+            setError(null);
+            setIsLoading(true);
+            await authApi.changePassword(passwordData);
+        } catch (err) {
+            const errorMessage = handleApiError(err);
+            setError(errorMessage);
+            throw new Error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    return {
+        changePassword,
         isLoading,
         error,
         clearError,

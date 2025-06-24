@@ -42,13 +42,10 @@ export default function CreateUserPage() {
 
         if (!formData.name.trim()) {
             errors.name = 'Name is required';
+        } if (!formData.email.trim()) {
+            errors.email = 'Email or username is required';
         }
-
-        if (!formData.email.trim()) {
-            errors.email = 'Email is required';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            errors.email = 'Please enter a valid email address';
-        }
+        // Removed strict email validation to allow usernames
 
         if (!formData.password) {
             errors.password = 'Password is required';
@@ -163,14 +160,12 @@ export default function CreateUserPage() {
                                     {validationErrors.name && (
                                         <p className="mt-1 text-sm text-red-600">{validationErrors.name}</p>
                                     )}
-                                </div>
-
-                                <div>
+                                </div>                                <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                        Email Address
+                                        Email or Username
                                     </label>
                                     <input
-                                        type="email"
+                                        type="text"
                                         name="email"
                                         id="email"
                                         required
@@ -178,12 +173,15 @@ export default function CreateUserPage() {
                                         onChange={(e) => handleInputChange('email', e.target.value)}
                                         className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${validationErrors.email ? 'border-red-300' : ''
                                             }`}
-                                        placeholder="Enter email address"
+                                        placeholder="Enter email or username"
                                         disabled={isLoading}
                                     />
                                     {validationErrors.email && (
                                         <p className="mt-1 text-sm text-red-600">{validationErrors.email}</p>
                                     )}
+                                    <p className="mt-1 text-sm text-gray-500">
+                                        You can enter either an email address or a username
+                                    </p>
                                 </div>
                             </div>
 

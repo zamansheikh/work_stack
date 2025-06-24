@@ -1,4 +1,4 @@
-import { Feature, User, PaginatedResponse, FeatureStats, Attachment, CreateUserRequest, UpdateUserRequest, ToggleUserRequest, UsersResponse } from '@/types';
+import { Feature, User, PaginatedResponse, FeatureStats, Attachment, CreateUserRequest, UpdateUserRequest, ToggleUserRequest, UsersResponse, ChangePasswordRequest } from '@/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -138,6 +138,17 @@ export const authApi = {
 
         const frontendUser = mapBackendUserToFrontend(response.data.user);
         return frontendUser;
+    },
+
+    async changePassword(passwordData: ChangePasswordRequest): Promise<void> {
+        const response = await apiFetch('/auth/change-password', {
+            method: 'PUT',
+            body: JSON.stringify(passwordData),
+        });
+
+        if (!response.success) {
+            throw new ApiError(response.message || 'Failed to change password', response.status || 500);
+        }
     },
 
     logout(): void {

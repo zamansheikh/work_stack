@@ -52,6 +52,11 @@ export interface ToggleUserRequest {
     enabled: boolean;
 }
 
+export interface ChangePasswordRequest {
+    currentPassword: string;
+    newPassword: string;
+}
+
 export interface UsersResponse {
     users: User[];
     totalUsers: number;

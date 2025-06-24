@@ -14,7 +14,8 @@ import {
     LogOut,
     Edit,
     Trash2,
-    Home
+    Home,
+    Lock
 
 } from 'lucide-react';
 import Link from 'next/link';
@@ -99,6 +100,13 @@ export default function AdminDashboard() {
                             >
                                 <Home className="h-4 w-4 mr-2" />
                                 Go to Features
+                            </Link>
+                            <Link
+                                href="/admin/change-password"
+                                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            >
+                                <Lock className="h-4 w-4 mr-2" />
+                                Change Password
                             </Link>
                             {user?.role === 'superadmin' && (
                                 <Link
