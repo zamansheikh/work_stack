@@ -160,6 +160,17 @@ curl -X DELETE http://localhost:5000/api/admin/users/USER_ID \
   -H "Authorization: Bearer YOUR_SUPER_ADMIN_JWT_TOKEN"
 ```
 
+## 17. Change Password (Any Authenticated User)
+```bash
+curl -X PUT http://localhost:5000/api/auth/change-password \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{
+    "currentPassword": "oldpassword123",
+    "newPassword": "newpassword123"
+  }'
+```
+
 ## Response Examples
 
 ### Successful Login Response
@@ -277,6 +288,22 @@ curl -X DELETE http://localhost:5000/api/admin/users/USER_ID \
       "enabled": false
     }
   }
+}
+```
+
+### Change Password Response
+```json
+{
+  "success": true,
+  "message": "Password changed successfully"
+}
+```
+
+### Change Password Error Response
+```json
+{
+  "success": false,
+  "message": "Current password is incorrect"
 }
 ```
 
