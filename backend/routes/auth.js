@@ -40,8 +40,8 @@ router.put('/change-password', protect, async (req, res) => {
             });
         }
 
-        // Get user from database
-        const user = await User.findById(req.user.userId);
+        // Get user from database using the ID from JWT token
+        const user = await User.findById(req.user.id);
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -63,7 +63,7 @@ router.put('/change-password', protect, async (req, res) => {
         const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
 
         // Update password
-        await User.findByIdAndUpdate(req.user.userId, {
+        await User.findByIdAndUpdate(req.user.id, {
             password: hashedNewPassword,
             updatedAt: new Date()
         });
@@ -82,4 +82,5 @@ router.put('/change-password', protect, async (req, res) => {
     }
 });
 
+module.exports = router;
 module.exports = router;
