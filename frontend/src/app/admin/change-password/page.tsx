@@ -32,7 +32,7 @@ export default function ChangePasswordPage() {
     if (authLoading) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#8BC342]"></div>
             </div>
         );
     }
@@ -122,8 +122,8 @@ export default function ChangePasswordPage() {
                 <div className="bg-white shadow rounded-lg">
                     <div className="px-4 py-5 sm:p-6">
                         <div className="flex items-center mb-6">
-                            <div className="rounded-full bg-blue-100 p-3 mr-4">
-                                <Lock className="h-6 w-6 text-blue-600" />
+                            <div className="rounded-full bg-green-100 p-3 mr-4">
+                                <Lock className="h-6 w-6 text-[#8BC342]" />
                             </div>
                             <div>
                                 <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -184,7 +184,7 @@ export default function ChangePasswordPage() {
                                         required
                                         value={formData.currentPassword}
                                         onChange={(e) => handleInputChange('currentPassword', e.target.value)}
-                                        className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm pr-10 ${validationErrors.currentPassword ? 'border-red-300' : ''
+                                        className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342] sm:text-sm pr-10 ${validationErrors.currentPassword ? 'border-red-300' : ''
                                             }`}
                                         placeholder="Enter your current password"
                                         disabled={isLoading || success}
@@ -219,7 +219,7 @@ export default function ChangePasswordPage() {
                                         required
                                         value={formData.newPassword}
                                         onChange={(e) => handleInputChange('newPassword', e.target.value)}
-                                        className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm pr-10 ${validationErrors.newPassword ? 'border-red-300' : ''
+                                        className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342] sm:text-sm pr-10 ${validationErrors.newPassword ? 'border-red-300' : ''
                                             }`}
                                         placeholder="Enter your new password"
                                         disabled={isLoading || success}
@@ -262,7 +262,7 @@ export default function ChangePasswordPage() {
                                                 setValidationErrors(prev => ({ ...prev, confirmPassword: '' }));
                                             }
                                         }}
-                                        className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm pr-10 ${validationErrors.confirmPassword ? 'border-red-300' : ''
+                                        className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342] sm:text-sm pr-10 ${validationErrors.confirmPassword ? 'border-red-300' : ''
                                             }`}
                                         placeholder="Confirm your new password"
                                         disabled={isLoading || success}
@@ -288,14 +288,14 @@ export default function ChangePasswordPage() {
                             <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
                                 <Link
                                     href="/admin"
-                                    className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                    className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8BC342]"
                                 >
                                     Cancel
                                 </Link>
                                 <button
                                     type="submit"
                                     disabled={isLoading || success}
-                                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-[#8BC342] to-[#6fa332] hover:from-[#6fa332] hover:to-[#5c8a28] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8BC342] disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isLoading ? (
                                         <div className="flex items-center">

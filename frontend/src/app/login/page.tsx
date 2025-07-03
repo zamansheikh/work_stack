@@ -34,8 +34,8 @@ export default function LoginPage() {
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
-                    <div className="rounded-full bg-blue-100 p-3">
-                        <LogIn className="h-8 w-8 text-blue-600" />
+                    <div className="rounded-full bg-green-100 p-3">
+                        <LogIn className="h-8 w-8 text-[#8BC342]" />
                     </div>
                 </div>                <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
                     Admin Login
@@ -77,7 +77,7 @@ export default function LoginPage() {
                                     required
                                     value={emailOrUsername}
                                     onChange={(e) => setEmailOrUsername(e.target.value)}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 px-3"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#8BC342] sm:text-sm sm:leading-6 px-3"
                                     placeholder="Enter your email or username"
                                     disabled={isSubmitting || isLoading}
                                 />
@@ -97,7 +97,7 @@ export default function LoginPage() {
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 px-3 pr-10"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#8BC342] sm:text-sm sm:leading-6 px-3 pr-10"
                                     placeholder="Enter your password"
                                     disabled={isSubmitting || isLoading}
                                 />
@@ -119,7 +119,7 @@ export default function LoginPage() {
                         <div>                            <button
                             type="submit"
                             disabled={isSubmitting || isLoading || !emailOrUsername || !password}
-                            className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex w-full justify-center rounded-md bg-gradient-to-r from-[#8BC342] to-[#6fa332] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:from-[#6fa332] hover:to-[#5c8a28] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8BC342] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isSubmitting || isLoading ? (
                                 <div className="flex items-center">

@@ -20,7 +20,7 @@ export default function AboutPage() {
                 {/* Mission */}
                 <div className="bg-white rounded-xl shadow-md p-8 mb-12">
                     <div className="flex items-center mb-6">
-                        <Target className="w-8 h-8 text-blue-600 mr-3" />
+                        <Target className="w-8 h-8 text-[#8BC342] mr-3" />
                         <h2 className="text-3xl font-bold text-gray-900">Our Mission</h2>
                     </div>
                     <p className="text-lg text-gray-700 leading-relaxed">
@@ -127,16 +127,16 @@ export default function AboutPage() {
                 {/* Team */}
                 <div className="bg-white rounded-xl shadow-md p-8">
                     <div className="flex items-center mb-6">
-                        <Users className="w-8 h-8 text-purple-600 mr-3" />
+                        <Users className="w-8 h-8 text-green-600 mr-3" />
                         <h2 className="text-3xl font-bold text-gray-900">The Team</h2>
                     </div>
                     <p className="text-lg text-gray-700 leading-relaxed mb-6">
                         Our development team consists of experienced developers who understand both technology and the bowling industry.
                         We combine technical expertise with domain knowledge to build features that truly serve the bowling community.
                     </p>
-                    <div className="bg-blue-50 rounded-lg p-6">
-                        <h3 className="text-xl font-semibold text-blue-900 mb-3">Why We&apos;re Building This</h3>
-                        <p className="text-blue-800">
+                    <div className="bg-green-50 rounded-lg p-6">
+                        <h3 className="text-xl font-semibold text-green-900 mb-3">Why We&apos;re Building This</h3>
+                        <p className="text-green-800">
                             The bowling industry has been underserved by technology. We&apos;re passionate about changing that by building
                             modern, scalable solutions that bring the bowling community together. Every line of code we write is
                             motivated by our desire to enhance the bowling experience for everyone involved.

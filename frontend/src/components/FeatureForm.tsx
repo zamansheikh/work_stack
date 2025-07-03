@@ -182,7 +182,7 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                                 required
                                 value={formData.name}
                                 onChange={handleInputChange}
-                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342]"
                                 placeholder="Enter feature name"
                             />
                         </div>
@@ -197,7 +197,7 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                                 required
                                 value={formData.status}
                                 onChange={handleInputChange}
-                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342]"
                             >
                                 <option value="planned">Planned</option>
                                 <option value="in-progress">In Progress</option>
@@ -216,7 +216,7 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                                 required
                                 value={formData.priority}
                                 onChange={handleInputChange}
-                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342]"
                             >
                                 <option value="low">Low</option>
                                 <option value="medium">Medium</option>
@@ -236,7 +236,7 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                                 rows={3}
                                 value={formData.description}
                                 onChange={handleInputChange}
-                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342]"
                                 placeholder="Brief description of the feature"
                             />
                         </div>
@@ -259,7 +259,7 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                                 rows={4}
                                 value={formData.purpose}
                                 onChange={handleInputChange}
-                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342]"
                                 placeholder="Explain why this feature is needed and what value it provides"
                             />
                         </div>
@@ -275,7 +275,7 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                                 rows={4}
                                 value={formData.implementation}
                                 onChange={handleInputChange}
-                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342]"
                                 placeholder="Describe how this feature will be implemented"
                             />
                         </div>
@@ -291,7 +291,7 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                                 rows={4}
                                 value={formData.technicalDetails}
                                 onChange={handleInputChange}
-                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342]"
                                 placeholder="Technical specifications, architecture, dependencies, etc."
                             />
                         </div>
@@ -308,13 +308,13 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                             value={tagInput}
                             onChange={(e) => setTagInput(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
-                            className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342]"
                             placeholder="Add a tag"
                         />
                         <button
                             type="button"
                             onClick={handleAddTag}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="px-4 py-2 bg-gradient-to-r from-[#8BC342] to-[#6fa332] text-white rounded-md hover:from-[#6fa332] hover:to-[#5c8a28] focus:outline-none focus:ring-2 focus:ring-[#8BC342]"
                         >
                             Add
                         </button>
@@ -324,13 +324,13 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                         {formData.tags.map((tag, index) => (
                             <span
                                 key={index}
-                                className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800"
+                                className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-green-100 text-green-800"
                             >
                                 {tag}
                                 <button
                                     type="button"
                                     onClick={() => handleRemoveTag(tag)}
-                                    className="ml-2 text-blue-600 hover:text-blue-800"
+                                    className="ml-2 text-green-600 hover:text-green-800"
                                 >
                                     <X className="w-3 h-3" />
                                 </button>
@@ -410,14 +410,14 @@ export default function FeatureForm({ feature, onSave, onCancel }: FeatureFormPr
                     <button
                         type="button"
                         onClick={handleCancel}
-                        className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#8BC342]"
                     >
                         Cancel
                     </button>
                     <button
                         type="submit"
                         disabled={isLoading || uploading}
-                        className="inline-flex items-center px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="inline-flex items-center px-6 py-2 bg-gradient-to-r from-[#8BC342] to-[#6fa332] text-white rounded-md hover:from-[#6fa332] hover:to-[#5c8a28] focus:outline-none focus:ring-2 focus:ring-[#8BC342] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isLoading ? (
                             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>

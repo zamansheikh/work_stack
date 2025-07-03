@@ -54,38 +54,38 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white">
+      <div className="bg-gradient-to-r from-[#8BC342] to-[#6fa332] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               BowlersNetwork
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
+            <p className="text-xl md:text-2xl mb-8 text-green-100">
               Feature Development Tracker
             </p>
-            <p className="text-lg max-w-3xl mx-auto text-blue-100">
+            <p className="text-lg max-w-3xl mx-auto text-green-100">
               Track our progress building the ultimate bowling ecosystem. See why we&apos;re implementing each feature,
               how we&apos;re building it, and the value it brings to bowlers, centers, and manufacturers.
             </p>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
-            <div className="text-center">
-              <div className="text-3xl font-bold">{stats.total}</div>
-              <div className="text-blue-200">Total Features</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 hover:bg-white/25 transition-all duration-300">
+              <div className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">{stats.total}</div>
+              <div className="text-white/90 font-medium text-sm md:text-base mt-1">Total Features</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-300">{stats.completed}</div>
-              <div className="text-blue-200">Completed</div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 hover:bg-white/25 transition-all duration-300">
+              <div className="text-4xl md:text-5xl font-bold text-emerald-200 drop-shadow-lg">{stats.completed}</div>
+              <div className="text-white/90 font-medium text-sm md:text-base mt-1">Completed</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-300">{stats.inProgress}</div>
-              <div className="text-blue-200">In Progress</div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 hover:bg-white/25 transition-all duration-300">
+              <div className="text-4xl md:text-5xl font-bold text-amber-200 drop-shadow-lg">{stats.inProgress}</div>
+              <div className="text-white/90 font-medium text-sm md:text-base mt-1">In Progress</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-300">{stats.planned}</div>
-              <div className="text-blue-200">Planned</div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 hover:bg-white/25 transition-all duration-300">
+              <div className="text-4xl md:text-5xl font-bold text-blue-200 drop-shadow-lg">{stats.planned}</div>
+              <div className="text-white/90 font-medium text-sm md:text-base mt-1">Planned</div>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@ export default function Home() {
                 placeholder="Search features, descriptions, or tags..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8BC342] focus:border-transparent"
                 disabled={isLoading}
               />
             </div>
@@ -114,7 +114,7 @@ export default function Home() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8BC342] focus:border-transparent"
                 disabled={isLoading}
               >
                 <option value="all">All Status</option>
@@ -127,7 +127,7 @@ export default function Home() {
               <select
                 value={priorityFilter}
                 onChange={(e) => setPriorityFilter(e.target.value)}
-                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8BC342] focus:border-transparent"
                 disabled={isLoading}
               >
                 <option value="all">All Priority</option>
@@ -141,14 +141,14 @@ export default function Home() {
               <div className="flex border border-gray-300 rounded-lg overflow-hidden">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-3 ${viewMode === 'grid' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                  className={`p-3 ${viewMode === 'grid' ? 'bg-[#8BC342] text-white' : 'bg-white text-gray-600'}`}
                   disabled={isLoading}
                 >
                   <Grid className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-3 ${viewMode === 'list' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                  className={`p-3 ${viewMode === 'list' ? 'bg-[#8BC342] text-white' : 'bg-white text-gray-600'}`}
                   disabled={isLoading}
                 >
                   <List className="w-5 h-5" />
@@ -183,7 +183,7 @@ export default function Home() {
         {/* Loading State */}
         {isLoading ? (
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8BC342]"></div>
             <span className="ml-3 text-lg text-gray-600">Loading features...</span>
           </div>
         ) : (

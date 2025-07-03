@@ -14,7 +14,7 @@ const FeatureCard = ({ feature, className }: FeatureCardProps) => {
             case 'completed':
                 return 'bg-green-100 text-green-800 border-green-200';
             case 'in-progress':
-                return 'bg-blue-100 text-blue-800 border-blue-200';
+                return 'bg-green-100 text-green-800 border-green-200';
             case 'planned':
                 return 'bg-yellow-100 text-yellow-800 border-yellow-200';
             case 'on-hold':
@@ -75,9 +75,9 @@ const FeatureCard = ({ feature, className }: FeatureCardProps) => {
 
             {/* Purpose Section */}
             <div className="px-6 pb-4">
-                <div className="bg-blue-50 rounded-lg p-4">
-                    <h4 className="text-sm font-semibold text-blue-900 mb-2">Why this feature?</h4>
-                    <p className="text-blue-800 text-sm line-clamp-3">
+                <div className="bg-green-50 rounded-lg p-4">
+                    <h4 className="text-sm font-semibold text-green-900 mb-2">Why this feature?</h4>
+                    <p className="text-green-800 text-sm line-clamp-3">
                         {feature.purpose}
                     </p>
                 </div>
@@ -118,7 +118,7 @@ const FeatureCard = ({ feature, className }: FeatureCardProps) => {
 
                     <Link
                         href={`/features/${feature.id}`}
-                        className="flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                        className="flex items-center text-[#8BC342] hover:text-[#6fa332] font-medium transition-colors"
                     >
                         View Details
                         <ArrowRight className="w-4 h-4 ml-1" />

@@ -23,8 +23,8 @@ const Navbar = () => {
                     {/* Logo and brand */}
                     <div className="flex items-center">
                         <Link href="/" className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                                <FileText className="w-5 h-5 text-white" />
+                            <div className="w-8 h-8 bg-gradient-to-r from-[#8BC342] to-[#6fa332] rounded-lg flex items-center justify-center">
+                                <img src="/logo/logo.png" alt="Logo" className="w-5 h-5" />
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-xl font-bold text-gray-900">BowlersNetwork</span>
@@ -37,19 +37,19 @@ const Navbar = () => {
                     <div className="hidden md:flex items-center space-x-8">
                         <Link
                             href="/"
-                            className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                            className="text-gray-700 hover:text-[#8BC342] transition-colors font-medium"
                         >
                             Features
                         </Link>
                         <Link
                             href="/features/roadmap"
-                            className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                            className="text-gray-700 hover:text-[#8BC342] transition-colors font-medium"
                         >
                             Roadmap
                         </Link>
                         <Link
                             href="/about"
-                            className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                            className="text-gray-700 hover:text-[#8BC342] transition-colors font-medium"
                         >
                             About
                         </Link>
@@ -58,14 +58,14 @@ const Navbar = () => {
                             <div className="flex items-center space-x-4">
                                 <Link
                                     href="/admin"
-                                    className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-2"
+                                    className="text-gray-700 hover:text-[#8BC342] transition-colors flex items-center space-x-2"
                                 >
                                     <Settings className="w-4 h-4" />
                                     <span>Admin</span>
                                 </Link>
                                 <Link
                                     href="/admin/features/new"
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                                    className="bg-gradient-to-r from-[#8BC342] to-[#6fa332] text-white px-4 py-2 rounded-lg hover:from-[#6fa332] hover:to-[#5c8a28] transition-all duration-200 flex items-center space-x-2"
                                 >
                                     <Plus className="w-4 h-4" />
                                     <span>Add Feature</span>
@@ -85,7 +85,7 @@ const Navbar = () => {
                         ) : (
                             <Link
                                 href="/login"
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                                className="bg-gradient-to-r from-[#8BC342] to-[#6fa332] text-white px-4 py-2 rounded-lg hover:from-[#6fa332] hover:to-[#5c8a28] transition-all duration-200 flex items-center space-x-2"
                             >
                                 <LogIn className="w-4 h-4" />
                                 <span>Admin Login</span>
@@ -97,7 +97,7 @@ const Navbar = () => {
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={toggleMenu}
-                            className="text-gray-700 hover:text-blue-600 transition-colors"
+                            className="text-gray-700 hover:text-[#8BC342] transition-colors"
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                         </button>
@@ -110,21 +110,21 @@ const Navbar = () => {
                         <div className="flex flex-col space-y-4">
                             <Link
                                 href="/"
-                                className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                                className="text-gray-700 hover:text-[#8BC342] transition-colors font-medium"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Features
                             </Link>
                             <Link
                                 href="/features/roadmap"
-                                className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                                className="text-gray-700 hover:text-[#8BC342] transition-colors font-medium"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Roadmap
                             </Link>
                             <Link
                                 href="/about"
-                                className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                                className="text-gray-700 hover:text-[#8BC342] transition-colors font-medium"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 About
@@ -134,7 +134,7 @@ const Navbar = () => {
                                 <div className="flex flex-col space-y-3 pt-3 border-t border-gray-200">
                                     <Link
                                         href="/admin"
-                                        className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-2"
+                                        className="text-gray-700 hover:text-[#8BC342] transition-colors flex items-center space-x-2"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         <Settings className="w-4 h-4" />
@@ -142,7 +142,7 @@ const Navbar = () => {
                                     </Link>
                                     <Link
                                         href="/admin/features/new"
-                                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                                        className="bg-gradient-to-r from-[#8BC342] to-[#6fa332] text-white px-4 py-2 rounded-lg hover:from-[#6fa332] hover:to-[#5c8a28] transition-all duration-200 flex items-center space-x-2"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         <Plus className="w-4 h-4" />
@@ -163,7 +163,7 @@ const Navbar = () => {
                             ) : (
                                 <Link
                                     href="/login"
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                                    className="bg-gradient-to-r from-[#8BC342] to-[#6fa332] text-white px-4 py-2 rounded-lg hover:from-[#6fa332] hover:to-[#5c8a28] transition-all duration-200 flex items-center space-x-2"
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     <LogIn className="w-4 h-4" />
