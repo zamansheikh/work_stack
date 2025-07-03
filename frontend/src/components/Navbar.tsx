@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
-import { Menu, X, User, LogIn, LogOut, FileText, Plus, Settings } from 'lucide-react';
+import { Menu, X, User, LogIn, LogOut, Plus, Settings } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 
 const Navbar = () => {
@@ -24,7 +25,7 @@ const Navbar = () => {
                     <div className="flex items-center">
                         <Link href="/" className="flex items-center space-x-3">
                             <div className="w-8 h-8 bg-gradient-to-r from-[#8BC342] to-[#6fa332] rounded-lg flex items-center justify-center">
-                                <img src="/logo/logo.png" alt="Logo" className="w-5 h-5" />
+                                <Image src="/logo/logo.png" alt="Logo" width={20} height={20} />
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-xl font-bold text-gray-900">BowlersNetwork</span>
