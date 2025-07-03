@@ -44,7 +44,7 @@ export default function UsersManagement() {
     if (authLoading) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#8BC342]"></div>
             </div>
         );
     }
@@ -120,7 +120,7 @@ export default function UsersManagement() {
             case 'superadmin':
                 return 'bg-purple-100 text-purple-800';
             case 'admin':
-                return 'bg-blue-100 text-blue-800';
+                return 'bg-green-100 text-green-800';
             default:
                 return 'bg-gray-100 text-gray-800';
         }
@@ -141,14 +141,14 @@ export default function UsersManagement() {
                         <div className="flex items-center space-x-4">
                             <Link
                                 href="/admin"
-                                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8BC342]"
                             >
                                 <Home className="h-4 w-4 mr-2" />
                                 Back to Dashboard
                             </Link>
                             <Link
                                 href="/admin/users/new"
-                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-[#8BC342] to-[#6fa332] hover:from-[#6fa332] hover:to-[#5c8a28] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8BC342]"
                             >
                                 <Plus className="h-4 w-4 mr-2" />
                                 New User
@@ -240,7 +240,7 @@ export default function UsersManagement() {
                                             placeholder="Search users..."
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
-                                            className="block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                            className="block w-full rounded-md border-gray-300 pl-10 focus:border-[#8BC342] focus:ring-[#8BC342] sm:text-sm"
                                         />
                                     </div>
                                 </div>
@@ -255,7 +255,7 @@ export default function UsersManagement() {
 
                         {usersLoading ? (
                             <div className="flex justify-center py-8">
-                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#8BC342]"></div>
                             </div>
                         ) : (
                             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
@@ -333,7 +333,7 @@ export default function UsersManagement() {
                                                     <div className="flex items-center space-x-2">
                                                         <Link
                                                             href={`/admin/users/${userItem.id}/edit`}
-                                                            className="text-blue-600 hover:text-blue-900"
+                                                            className="text-[#8BC342] hover:text-[#6fa332]"
                                                         >
                                                             <Edit className="h-4 w-4" />
                                                         </Link>

@@ -153,8 +153,8 @@ export default function EditUserPage() {
                 <div className="bg-white shadow rounded-lg">
                     <div className="px-4 py-5 sm:p-6">
                         <div className="flex items-center mb-6">
-                            <div className="rounded-full bg-blue-100 p-3 mr-4">
-                                <UserCog className="h-6 w-6 text-blue-600" />
+                            <div className="rounded-full bg-green-100 p-3 mr-4">
+                                <UserCog className="h-6 w-6 text-[#8BC342]" />
                             </div>
                             <div>
                                 <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -199,7 +199,7 @@ export default function EditUserPage() {
                                         required
                                         value={formData.name || ''}
                                         onChange={(e) => handleInputChange('name', e.target.value)}
-                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${validationErrors.name ? 'border-red-300' : ''
+                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342] sm:text-sm ${validationErrors.name ? 'border-red-300' : ''
                                             }`}
                                         placeholder="Enter full name"
                                         disabled={isLoading}
@@ -217,7 +217,7 @@ export default function EditUserPage() {
                                         id="email"
                                         required
                                         value={formData.email || ''} onChange={(e) => handleInputChange('email', e.target.value)}
-                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${validationErrors.email ? 'border-red-300' : ''
+                                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342] sm:text-sm ${validationErrors.email ? 'border-red-300' : ''
                                             }`}
                                         placeholder="Enter email or username"
                                         disabled={isLoading}
@@ -240,7 +240,7 @@ export default function EditUserPage() {
                                     name="role"
                                     value={formData.role || 'admin'}
                                     onChange={(e) => handleInputChange('role', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8BC342] focus:ring-[#8BC342] sm:text-sm"
                                     disabled={isLoading || isCurrentUser} // Prevent users from changing their own role
                                 >
                                     <option value="admin">Admin</option>
@@ -280,14 +280,14 @@ export default function EditUserPage() {
                             <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
                                 <Link
                                     href="/admin/users"
-                                    className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                    className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8BC342]"
                                 >
                                     Cancel
                                 </Link>
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-[#8BC342] to-[#6fa332] hover:from-[#6fa332] hover:to-[#5c8a28] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8BC342] disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isLoading ? (
                                         <div className="flex items-center">
