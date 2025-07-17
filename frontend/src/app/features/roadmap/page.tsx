@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import FeatureCard from '@/components/FeatureCard';
 import { useFeatures } from '@/lib/hooks';
@@ -8,16 +8,47 @@ import { CheckCircle, Clock, Calendar, Pause } from 'lucide-react';
 import { Feature } from '@/types';
 
 export default function RoadmapPage() {
-    const { features } = useFeatures();
+    const [page, setPage] = useState(1);
+    const [allFeatures, setAllFeatures] = useState<Feature[]>([]);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+    const { features, pagination, isLoading } = useFeatures({
+        limit: 20,
+        page,
+    });
+
+    // Handle features accumulation for pagination
+    useEffect(() => {
+        if (page === 1) {
+            // First page - replace all features
+            setAllFeatures(features);
+        } else {
+            // Subsequent pages - append to existing features
+            // Filter out any duplicates by ID that might already exist in the previous pages
+            setAllFeatures(prev => {
+                const existingIds = new Set(prev.map(f => f.id));
+                const newUniqueFeatures = features.filter(f => !existingIds.has(f.id));
+                return [...prev, ...newUniqueFeatures];
+            });
+        }
+        setIsLoadingMore(false);
+    }, [features, page]);
 
     const featuresByStatus = useMemo(() => {
         return {
-            completed: features.filter(f => f.status === 'completed'),
-            'in-progress': features.filter(f => f.status === 'in-progress'),
-            planned: features.filter(f => f.status === 'planned'),
-            'on-hold': features.filter(f => f.status === 'on-hold'),
+            completed: allFeatures.filter(f => f.status === 'completed'),
+            'in-progress': allFeatures.filter(f => f.status === 'in-progress'),
+            planned: allFeatures.filter(f => f.status === 'planned'),
+            'on-hold': allFeatures.filter(f => f.status === 'on-hold'),
         };
-    }, [features]); const StatusSection = ({
+    }, [allFeatures]);
+
+    const handleShowMore = () => {
+        setIsLoadingMore(true);
+        setPage(prev => prev + 1);
+    };
+
+    const hasNextPage = pagination?.hasNextPage || false; const StatusSection = ({
         title,
         features: sectionFeatures,
         icon: Icon,
@@ -74,52 +105,52 @@ export default function RoadmapPage() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         <div className="text-center">
                             <div className="text-3xl font-bold text-green-600 mb-2">
-                                {featuresByStatus.completed.length}
+                                {pagination?.totalCompleted || featuresByStatus.completed.length}
                             </div>
                             <div className="text-sm text-gray-600">Completed</div>
                             <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                 <div
                                     className="bg-green-600 h-2 rounded-full" style={{
-                                        width: `${(featuresByStatus.completed.length / features.length) * 100}%`
+                                        width: `${((pagination?.totalCompleted || featuresByStatus.completed.length) / (pagination?.totalFeatures || allFeatures.length)) * 100}%`
                                     }}
                                 ></div>
                             </div>
                         </div>
                         <div className="text-center">
                             <div className="text-3xl font-bold text-blue-600 mb-2">
-                                {featuresByStatus['in-progress'].length}
+                                {pagination?.totalInProgress || featuresByStatus['in-progress'].length}
                             </div>
                             <div className="text-sm text-gray-600">In Progress</div>
                             <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                 <div
                                     className="bg-blue-600 h-2 rounded-full" style={{
-                                        width: `${(featuresByStatus['in-progress'].length / features.length) * 100}%`
+                                        width: `${((pagination?.totalInProgress || featuresByStatus['in-progress'].length) / (pagination?.totalFeatures || allFeatures.length)) * 100}%`
                                     }}
                                 ></div>
                             </div>
                         </div>
                         <div className="text-center">
                             <div className="text-3xl font-bold text-yellow-600 mb-2">
-                                {featuresByStatus.planned.length}
+                                {pagination?.totalPlanned || featuresByStatus.planned.length}
                             </div>
                             <div className="text-sm text-gray-600">Planned</div>
                             <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                 <div
                                     className="bg-yellow-600 h-2 rounded-full" style={{
-                                        width: `${(featuresByStatus.planned.length / features.length) * 100}%`
+                                        width: `${((pagination?.totalPlanned || featuresByStatus.planned.length) / (pagination?.totalFeatures || allFeatures.length)) * 100}%`
                                     }}
                                 ></div>
                             </div>
                         </div>
                         <div className="text-center">
                             <div className="text-3xl font-bold text-red-600 mb-2">
-                                {featuresByStatus['on-hold'].length}
+                                {pagination?.totalOnHold || featuresByStatus['on-hold'].length}
                             </div>
                             <div className="text-sm text-gray-600">On Hold</div>
                             <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                 <div
                                     className="bg-red-600 h-2 rounded-full" style={{
-                                        width: `${(featuresByStatus['on-hold'].length / features.length) * 100}%`
+                                        width: `${((pagination?.totalOnHold || featuresByStatus['on-hold'].length) / (pagination?.totalFeatures || allFeatures.length)) * 100}%`
                                     }}
                                 ></div>
                             </div>
@@ -159,6 +190,26 @@ export default function RoadmapPage() {
                     iconColor="text-red-600"
                     description="Features temporarily paused due to dependencies or changing priorities"
                 />
+
+                {/* Load More Button */}
+                {hasNextPage && (
+                    <div className="flex justify-center mt-12">
+                        <button
+                            onClick={handleShowMore}
+                            disabled={isLoadingMore || isLoading}
+                            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-[#8BC342] to-[#6fa332] hover:from-[#6fa332] hover:to-[#5c8a28] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8BC342] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                        >
+                            {isLoadingMore ? (
+                                <>
+                                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                                    Loading...
+                                </>
+                            ) : (
+                                'Load More Features'
+                            )}
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
