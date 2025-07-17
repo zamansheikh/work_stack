@@ -50,9 +50,11 @@ export default function Home() {
     } else {
       // Subsequent pages - append to existing features
       // Filter out any duplicates by ID that might already exist in the previous pages
-      const existingIds = new Set(allFeatures.map(f => f.id));
-      const newUniqueFeatures = features.filter(f => !existingIds.has(f.id));
-      setAllFeatures(prev => [...prev, ...newUniqueFeatures]);
+      setAllFeatures(prev => {
+        const existingIds = new Set(prev.map(f => f.id));
+        const newUniqueFeatures = features.filter(f => !existingIds.has(f.id));
+        return [...prev, ...newUniqueFeatures];
+      });
     }
     setIsLoadingMore(false);
   }, [features, page]);

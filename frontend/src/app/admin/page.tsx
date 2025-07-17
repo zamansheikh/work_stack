@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useFeatures, useFeatureMutations } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import type { Feature } from "@/types";
 import {
   Plus,
   Search,
@@ -26,7 +27,7 @@ export default function AdminDashboard() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [featureToDelete, setFeatureToDelete] = useState<string | null>(null);
   const [page, setPage] = useState(1);
-  const [allFeatures, setAllFeatures] = useState<any[]>([]);
+  const [allFeatures, setAllFeatures] = useState<Feature[]>([]);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // Debounce search query
@@ -65,9 +66,11 @@ export default function AdminDashboard() {
     } else {
       // Subsequent pages - append to existing features
       // Filter out any duplicates by ID that might already exist in the previous pages
-      const existingIds = new Set(allFeatures.map(f => f.id));
-      const newUniqueFeatures = features.filter(f => !existingIds.has(f.id));
-      setAllFeatures(prev => [...prev, ...newUniqueFeatures]);
+      setAllFeatures(prev => {
+        const existingIds = new Set(prev.map(f => f.id));
+        const newUniqueFeatures = features.filter(f => !existingIds.has(f.id));
+        return [...prev, ...newUniqueFeatures];
+      });
     }
     setIsLoadingMore(false);
   }, [features, page]);
