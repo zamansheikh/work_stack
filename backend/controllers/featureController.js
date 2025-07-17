@@ -34,7 +34,8 @@ const getAllFeatures = async (req, res) => {
             .limit(parseInt(limit));
 
         // Get total count for pagination
-        const totalFeatures = await Feature.countDocuments(query);
+        // const totalFeatures = await Feature.countDocuments(query);
+        const totalFeatures = await Feature.countDocuments();
         const totalCompleted = await Feature.countDocuments({ status: 'completed' });
         const totalInProgress = await Feature.countDocuments({ status: 'in-progress' });
         const totalPlanned = await Feature.countDocuments({ status: 'planned' });
