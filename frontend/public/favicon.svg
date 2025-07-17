@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Green Background -->
+  <circle cx="32" cy="32" r="30" fill="#28a745" />
+  
+  <!-- Bowling Ball (white circle with finger holes) -->
+  <circle cx="32" cy="32" r="14" fill="white" />
+  <circle cx="28" cy="28" r="2" fill="#444" />
+  <circle cx="32" cy="26" r="2" fill="#444" />
+  <circle cx="36" cy="28" r="2" fill="#444" />
+  
+  <!-- Letter T overlay -->
+  <text x="32" y="48" font-family="Arial, sans-serif" font-size="24" fill="#28a745" font-weight="bold" text-anchor="middle">T</text>
+</svg>
