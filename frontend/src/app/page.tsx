@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
+import type { Feature } from '@/types';
 import Navbar from '@/components/Navbar';
 import FeatureCard from '@/components/FeatureCard';
 import { useFeatures } from '@/lib/hooks';
@@ -12,6 +13,9 @@ export default function Home() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [priorityFilter, setPriorityFilter] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [page, setPage] = useState(1);
+  const [allFeatures, setAllFeatures] = useState<Feature[]>([]);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // Debounce search query to prevent too many API calls
   useEffect(() => {
@@ -25,6 +29,7 @@ export default function Home() {
   // Use real API data
   const {
     features,
+    pagination,
     isLoading,
     error,
     refetch,
@@ -33,21 +38,62 @@ export default function Home() {
     search: debouncedSearch || undefined,
     status: statusFilter !== 'all' ? statusFilter : undefined,
     priority: priorityFilter !== 'all' ? priorityFilter : undefined,
+    limit: 9,
+    page,
   });
 
-  const stats = useMemo(() => {
-    const total = features.length;
-    const completed = features.filter(f => f.status === 'completed').length;
-    const inProgress = features.filter(f => f.status === 'in-progress').length;
-    const planned = features.filter(f => f.status === 'planned').length;
+  // Handle features accumulation for pagination
+  useEffect(() => {
+    if (page === 1) {
+      // First page or filters changed - replace all features
+      setAllFeatures(features);
+    } else {
+      // Subsequent pages - append to existing features
+      // Filter out any duplicates by ID that might already exist in the previous pages
+      const existingIds = new Set(allFeatures.map(f => f.id));
+      const newUniqueFeatures = features.filter(f => !existingIds.has(f.id));
+      setAllFeatures(prev => [...prev, ...newUniqueFeatures]);
+    }
+    setIsLoadingMore(false);
+  }, [features, page]);
 
-    return { total, completed, inProgress, planned };
-  }, [features]);
+  // Reset to first page when filters change
+  useEffect(() => {
+    setPage(1);
+    setAllFeatures([]);
+  }, [debouncedSearch, statusFilter, priorityFilter]);
+
+  const stats = useMemo(() => {
+    if (pagination) {
+      return {
+        total: pagination.totalFeatures,
+        completed: pagination.totalCompleted,
+        inProgress: pagination.totalInProgress,
+        planned: pagination.totalPlanned,
+        onHold: pagination.totalOnHold,
+      };
+    }
+    // Fallback calculation from current features
+    const total = allFeatures.length;
+    const completed = allFeatures.filter(f => f.status === 'completed').length;
+    const inProgress = allFeatures.filter(f => f.status === 'in-progress').length;
+    const planned = allFeatures.filter(f => f.status === 'planned').length;
+    const onHold = allFeatures.filter(f => f.status === 'on-hold').length;
+
+    return { total, completed, inProgress, planned, onHold };
+  }, [allFeatures, pagination]);
 
   const handleRetry = () => {
     clearError();
     refetch();
   };
+
+  const handleShowMore = () => {
+    setIsLoadingMore(true);
+    setPage(prev => prev + 1);
+  };
+
+  const hasNextPage = pagination?.hasNextPage || false;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -70,7 +116,7 @@ export default function Home() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-12">
             <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 hover:bg-white/25 transition-all duration-300">
               <div className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">{stats.total}</div>
               <div className="text-white/90 font-medium text-sm md:text-base mt-1">Total Features</div>
@@ -86,6 +132,10 @@ export default function Home() {
             <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 hover:bg-white/25 transition-all duration-300">
               <div className="text-4xl md:text-5xl font-bold text-blue-200 drop-shadow-lg">{stats.planned}</div>
               <div className="text-white/90 font-medium text-sm md:text-base mt-1">Planned</div>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 hover:bg-white/25 transition-all duration-300">
+              <div className="text-4xl md:text-5xl font-bold text-purple-200 drop-shadow-lg">{stats.onHold}</div>
+              <div className="text-white/90 font-medium text-sm md:text-base mt-1">On Hold</div>
             </div>
           </div>
         </div>
@@ -191,7 +241,7 @@ export default function Home() {
             {/* Results */}
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-gray-900">
-                Features ({features.length})
+                Features ({allFeatures.length})
               </h2>
               <p className="text-gray-600">
                 Discover how we&apos;re building the future of bowling technology
@@ -199,19 +249,41 @@ export default function Home() {
             </div>
 
             {/* Feature Grid */}
-            {features.length > 0 ? (
-              <div className={`grid gap-6 ${viewMode === 'grid'
-                ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-                : 'grid-cols-1'
-                }`}>
-                {features.map((feature) => (
-                  <FeatureCard
-                    key={feature.id}
-                    feature={feature}
-                    className={viewMode === 'list' ? 'col-span-full' : ''}
-                  />
-                ))}
-              </div>
+            {allFeatures.length > 0 ? (
+              <>
+                <div className={`grid gap-6 ${viewMode === 'grid'
+                  ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+                  : 'grid-cols-1'
+                  }`}>
+                  {allFeatures.map((feature) => (
+                    <FeatureCard
+                      key={feature.id}
+                      feature={feature}
+                      className={viewMode === 'list' ? 'col-span-full' : ''}
+                    />
+                  ))}
+                </div>
+
+                {/* Show More Button */}
+                {hasNextPage && (
+                  <div className="flex justify-center mt-8">
+                    <button
+                      onClick={handleShowMore}
+                      disabled={isLoadingMore}
+                      className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-[#8BC342] to-[#6fa332] hover:from-[#6fa332] hover:to-[#5c8a28] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8BC342] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                    >
+                      {isLoadingMore ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                          Loading...
+                        </>
+                      ) : (
+                        'Show More'
+                      )}
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="text-center py-12">
                 <TrendingUp className="w-16 h-16 text-gray-400 mx-auto mb-4" />

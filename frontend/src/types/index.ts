@@ -69,6 +69,13 @@ export interface PaginationInfo {
     hasNextPage: boolean;
     hasPrevPage: boolean;
     limit: number;
+    // Backend pagination stats
+    totalFeatures: number;
+    totalCompleted: number;
+    totalInProgress: number;
+    totalPlanned: number;
+    totalOnHold: number;
+    totalCancelled?: number;
 }
 
 export interface PaginatedResponse<T> {
