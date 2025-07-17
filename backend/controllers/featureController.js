@@ -35,6 +35,11 @@ const getAllFeatures = async (req, res) => {
 
         // Get total count for pagination
         const totalFeatures = await Feature.countDocuments(query);
+        const totalCompleted = await Feature.countDocuments({ status: 'completed' });
+        const totalInProgress = await Feature.countDocuments({ status: 'in-progress' });
+        const totalPlanned = await Feature.countDocuments({ status: 'planned' });
+        const totalOnHold = await Feature.countDocuments({ status: 'on-hold' });
+        const totalCancelled = await Feature.countDocuments({ status: 'cancelled' });
         const totalPages = Math.ceil(totalFeatures / parseInt(limit));
 
         res.json({
@@ -45,6 +50,11 @@ const getAllFeatures = async (req, res) => {
                     currentPage: parseInt(page),
                     totalPages,
                     totalFeatures,
+                    totalCompleted,
+                    totalInProgress,
+                    totalPlanned,
+                    totalOnHold,
+                    totalCancelled,
                     hasNextPage: parseInt(page) < totalPages,
                     hasPrevPage: parseInt(page) > 1,
                     limit: parseInt(limit)
