@@ -21,22 +21,62 @@ import Link from "next/link";
 
 export default function AdminDashboard() {
   const { user, isAuthenticated, isLoading: authLoading, logout } = useAuth();
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [featureToDelete, setFeatureToDelete] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [allFeatures, setAllFeatures] = useState<any[]>([]);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
   const {
     features,
+    pagination,
     isLoading: featuresLoading,
     error,
     refetch,
-  } = useFeatures();
+  } = useFeatures({
+    search: debouncedSearch || undefined,
+    limit: 20,
+    page,
+  });
   const { deleteFeature, isLoading: isDeleting } = useFeatureMutations();
-  const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [featureToDelete, setFeatureToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       router.push("/login");
     }
   }, [authLoading, isAuthenticated, router]);
+
+  // Handle features accumulation for pagination
+  useEffect(() => {
+    if (page === 1) {
+      // First page or filters changed - replace all features
+      setAllFeatures(features);
+    } else {
+      // Subsequent pages - append to existing features
+      // Filter out any duplicates by ID that might already exist in the previous pages
+      const existingIds = new Set(allFeatures.map(f => f.id));
+      const newUniqueFeatures = features.filter(f => !existingIds.has(f.id));
+      setAllFeatures(prev => [...prev, ...newUniqueFeatures]);
+    }
+    setIsLoadingMore(false);
+  }, [features, page]);
+
+  // Reset to first page when search changes
+  useEffect(() => {
+    setPage(1);
+    setAllFeatures([]);
+  }, [debouncedSearch]);
 
   if (authLoading) {
     return (
@@ -50,17 +90,25 @@ export default function AdminDashboard() {
     return null;
   }
 
-  const filteredFeatures = features.filter(
+  const filteredFeatures = allFeatures.filter(
     (feature) =>
-      feature.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      feature.description.toLowerCase().includes(searchTerm.toLowerCase())
+      feature.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      feature.description.toLowerCase().includes(debouncedSearch.toLowerCase())
   );
+
   const stats = {
-    total: features.length,
-    completed: features.filter((f) => f.status === "completed").length,
-    inProgress: features.filter((f) => f.status === "in-progress").length,
-    planned: features.filter((f) => f.status === "planned").length,
+    total: pagination?.totalFeatures || allFeatures.length,
+    completed: pagination?.totalCompleted || allFeatures.filter((f) => f.status === "completed").length,
+    inProgress: pagination?.totalInProgress || allFeatures.filter((f) => f.status === "in-progress").length,
+    planned: pagination?.totalPlanned || allFeatures.filter((f) => f.status === "planned").length,
   };
+
+  const handleShowMore = () => {
+    setIsLoadingMore(true);
+    setPage(prev => prev + 1);
+  };
+
+  const hasNextPage = pagination?.hasNextPage || false;
 
   const handleDeleteClick = (featureId: string) => {
     setFeatureToDelete(featureId);
@@ -352,8 +400,28 @@ export default function AdminDashboard() {
                         </td>
                       </tr>
                     ))}
-                  </tbody>{" "}
+                  </tbody>
                 </table>
+
+                {/* Load More Button */}
+                {hasNextPage && !debouncedSearch && (
+                  <div className="flex justify-center mt-6 px-6 pb-6">
+                    <button
+                      onClick={handleShowMore}
+                      disabled={isLoadingMore}
+                      className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-[#8BC342] to-[#6fa332] hover:from-[#6fa332] hover:to-[#5c8a28] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8BC342] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                    >
+                      {isLoadingMore ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                          Loading...
+                        </>
+                      ) : (
+                        'Load More Features'
+                      )}
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
